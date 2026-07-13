@@ -1,0 +1,22 @@
+[project]
+name = "qualifyze-case-study"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.15.0",
+    "jupyter>=1.1.1",
+    "jupytext>=1.19.4",
+    "lxml>=6.1.1",
+    "matplotlib>=3.11.0",
+    "notebook>=7.6.0",
+    "openpyxl>=3.1.5",
+    "pandas>=3.0.3",
+    "plotly>=6.9.0",
+    "pyarrow>=25.0.0",
+    "requests>=2.34.2",
+    "scikit-learn>=1.9.0",
+    "seaborn>=0.13.2",
+    "shap>=0.52.0",
+    "xgboost>=3.3.0",
+]

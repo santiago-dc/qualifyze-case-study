@@ -1,0 +1,23 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Data (too large for git)
+data/raw/
+data/processed/
+data/scores/
+
+# Airflow
+logs/
+
+# OS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
