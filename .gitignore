@@ -6,7 +6,6 @@ __pycache__/
 
 # Data (too large for git)
 data/raw/
-data/processed/
 data/scores/
 
 # Airflow
