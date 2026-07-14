@@ -70,6 +70,7 @@ def main():
     st.set_page_config(page_title="Supplier Risk Assessment", page_icon="🏭", layout="wide")
 
     st.title("🏭 Supplier Risk Assessment")
+    st.caption("by Santiago Dominguez")
     st.markdown("Predict the likelihood of FDA non-compliance (OAI) for a facility based on its historical data.")
 
     model, meta = load_model()
