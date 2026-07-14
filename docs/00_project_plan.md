@@ -28,99 +28,51 @@
 - [x] Download Published 483s (FDA Dashboard manual → `published_483s.xlsx`)
 - [x] Document data sources and context (`docs/01_data_collection.md`)
 
-### D2 — EDA + Entity Resolution
+### D2 — EDA + Entity Resolution ✅ DONE
 
-- [ ] Exploratory notebook (`notebooks/01_eda.ipynb`):
-  - Distribution of inspections over time, by country, by product type
-  - Classification trends (is OAI increasing/decreasing?)
-  - Top repeat offenders (facilities with most OAIs)
-  - Warning letter volume over time and by subject category
-  - Enforcement/recall patterns
-- [ ] Entity resolution strategy:
-  - Match warning letters → inspections by company name (fuzzy matching)
-  - Match enforcement → inspections by recalling_firm (fuzzy matching)
-  - Evaluate matching quality (precision/recall of the matching)
-- [ ] Document findings (`docs/02_eda_findings.md`)
+- [x] Exploratory notebook (`notebooks/01_eda.ipynb`)
+- [x] Entity resolution (TF-IDF + location matching)
+- [x] Document findings (`docs/02_eda_and_entity_resolution.md`)
 
-### D3 — Preprocessing + Feature Engineering
+### D3 — Preprocessing + Feature Engineering ✅ DONE
 
-- [ ] Build feature pipeline (`src/features/build_features.py`):
-  - Unit of analysis: **one row per facility (FEI Number) per time window**
-  - Features to build:
-    - `n_inspections_last_N_years` — inspection count
-    - `n_oai`, `n_vai`, `n_nai` — classification history
-    - `pct_oai` — OAI rate
-    - `trend` — is classification getting worse or better over time?
-    - `days_since_last_inspection` — recency
-    - `n_citations` — total citation count
-    - `n_unique_cfr_violations` — breadth of violations
-    - `has_warning_letter` — binary (from entity-matched data)
-    - `n_warning_letters` — count
-    - `has_recall` — binary
-    - `n_class_I_recalls` — most severe recalls
-    - `product_type` — categorical (drugs, devices, food)
-    - `country` — categorical
-    - `n_483s_published` — count of published Form 483s
-  - Target variable: **OAI in next inspection** (binary classification)
-- [ ] Handle temporal split:
-  - Train on inspections up to 2024
-  - Test on 2025-2026 inspections
-  - This simulates "predicting the future" realistically
-- [ ] Save processed dataset (`data/processed/features.parquet`)
+- [x] Feature pipeline (`src/features/build_features.py`)
+- [x] 22 temporal features per inspection (no leakage)
+- [x] Temporal split: train < 2025, test >= 2025
+- [x] Saved as `data/processed/features.parquet`
 
-### D4 — Modeling
+### D4 — Modeling ✅ DONE
 
-- [ ] Modeling notebook (`notebooks/02_modeling.ipynb`):
-  - Baseline: Logistic Regression (interpretable by default)
-  - Main model: XGBoost / LightGBM
-  - Handle class imbalance (scale_pos_weight or class_weight)
-  - Hyperparameter tuning (basic grid/random search)
-  - Metrics: Precision-Recall AUC, ROC-AUC, F1, calibration plot
-  - Temporal validation (not random split!)
-- [ ] Save trained model (`src/models/`)
-- [ ] Document trade-offs:
-  - Precision vs Recall trade-off for the business context
-  - Why we chose threshold X
-  - Comparison of model complexity vs interpretability
+- [x] Logistic Regression baseline + XGBoost with class weights
+- [x] Hyperparameter tuning (RandomizedSearchCV, PR-AUC, TimeSeriesSplit)
+- [x] Ablation: removed `last_classification_oai` → model improved
+- [x] Final: ROC-AUC 0.875, PR-AUC 0.376
+- [x] Threshold analysis with business justification
 
-### D5 — Interpretability
+### D5 — Interpretability ✅ DONE
 
-- [ ] Interpretability notebook (`notebooks/03_interpretability.ipynb`):
-  - SHAP values (global feature importance)
-  - SHAP local explanations (why did we flag facility X?)
-  - Partial Dependence Plots for top features
-  - Risk scorecard mockup: example output for a single supplier
-- [ ] Discussion points for stakeholders:
-  - How to communicate "this supplier has 73% risk" to a non-technical user
-  - Regulatory transparency requirements
-  - Confidence intervals and model uncertainty
+- [x] SHAP global + local explanations
+- [x] Dependence plots
+- [x] Supplier Risk Report mockup
+- [x] Stakeholder communication guidelines
+- [x] Feature experiments notebook (failed attempts documented)
 
-### D6 — Report + Slides + Airflow DAGs
+### D6 — Report + Slides + MLOps ✅ DONE
 
-- [ ] Write report (`reports/report.md` or PDF):
-  - Executive summary
-  - Methodology
-  - Key findings
-  - Limitations and assumptions
-  - Recommendations for production
-- [ ] Create slides (Google Slides or PDF):
-  - ~10-12 slides max
-  - Problem → Data → Approach → Results → Interpretability → Next Steps
-- [ ] Airflow DAGs (`dags/`):
-  - `data_ingestion_dag.py` — periodic FDA data refresh
-  - `feature_pipeline_dag.py` — preprocessing + feature engineering
-  - `model_retrain_dag.py` — scheduled retraining with champion/challenger
-  - `scoring_dag.py` — batch inference for all suppliers
-- [ ] Docker-compose for local Airflow (`docker-compose.yml`)
-- [ ] Architecture diagram (for deployment/scalability section)
+- [x] Report (`reports/report.md`)
+- [x] Slides (`reports/presentation.pptx`)
+- [x] Airflow DAGs (4 DAGs in `dags/`)
+- [x] Docker Compose for local Airflow
+- [x] Selenium automation for FDA Dashboard downloads
 
-### D7 — Buffer / Polish
+### D7 — Deployment & CI/CD ✅ DONE
 
-- [ ] Review all code and remove debug artifacts
-- [ ] Ensure the repo can be cloned and run end-to-end (`README.md` with instructions)
-- [ ] Test notebooks run cleanly
-- [ ] Rehearse presentation talking points
-- [ ] Push to GitHub (personal account: santiago.dominguezc@outlook.es)
+- [x] Streamlit app (`app/streamlit_app.py`)
+- [x] Deployed to Azure App Service (free tier)
+- [x] GitHub Actions CI (pytest on PRs)
+- [x] Deploy only after tests pass
+- [x] Branch protection on main (requires PR)
+- [x] Repo made public: https://github.com/santiago-dc/qualifyze-case-study
 
 ---
 
