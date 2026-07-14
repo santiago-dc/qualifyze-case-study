@@ -21,6 +21,7 @@ dependencies = [
     "seaborn>=0.13.2",
     "selenium>=4.46.0",
     "shap>=0.52.0",
+    "streamlit>=1.59.1",
     "webdriver-manager>=4.1.2",
     "xgboost>=3.3.0",
 ]
