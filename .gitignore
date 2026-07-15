@@ -20,3 +20,6 @@ logs/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# Presentations
+*.pptx
