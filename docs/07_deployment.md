@@ -44,6 +44,23 @@ Local (demo):
   - Example FEI numbers provided for demo
 - **Stack**: Streamlit on Azure App Service Free (F1), Python 3.12
 
+### Inference correction
+
+Important distinction between training and inference:
+
+```
+TRAINING:   features from BEFORE inspection N → predict inspection N
+INFERENCE:  features from ALL inspections (incl. latest) → predict the NEXT one
+```
+
+The app corrects for this by taking the last row in the parquet for a FEI and:
+1. Adding +1 to `n_prior_inspections`
+2. Adding the last inspection's outcome to `n_prior_oai` or `n_prior_nai`
+3. Recalculating `days_since_last_inspection` as days from last inspection to today
+4. Updating `last_classification_oai/vai` and trend features
+
+This ensures we're answering "what will happen NEXT?" not "what happened THIS time?"
+
 ## CI/CD Pipeline
 
 ```
